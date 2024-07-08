@@ -18,14 +18,17 @@ const mockImages = mockURLs.map((url, index) => ({
   id: index + 1,
   url,
 }));
+
 async function Images() {
   const images = await getMyImages();
   return (
     <div className="flex flex-wrap justify-center gap-4 p-8">
       {images.map((image) => (
         <div key={image.id} className="flex h-48 w-48 flex-col justify-center">
-          <Image src={image.url} alt={image.name} width={192} height={192} />
-          <div>{image.name}</div>
+          <Link href={`/img/${image.id}`}>
+            <Image src={image.url} alt={image.name} width={192} height={192} />
+            <div>{image.name}</div>
+          </Link>
         </div>
       ))}
     </div>
