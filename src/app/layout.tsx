@@ -32,10 +32,10 @@ export default function RootLayout({
            */
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
-        <body className="dark">
+        <body className="">
           <div className="grid h-screen grid-rows-[auto,1fr]">
             <TopNav />
-            <main className="scrollbar scrollbar-track-transparent scrollbar-thumb-slate-800 overflow-y-scroll">
+            <main className="scrollbar scrollbar-track-transparent scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-800 overflow-y-scroll">
               {children}
             </main>
             {modal}

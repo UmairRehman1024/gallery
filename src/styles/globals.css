@@ -4,58 +4,58 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --background: 214.3 31.8% 91.4%; /* Soft light blue */
+    --foreground: 222.2 84% 14%; /* Darker gray for better contrast */
+    --card: 210 36% 98%; /* Very light blue */
+    --card-foreground: 222.2 84% 14%; /* Darker gray */
+    --popover: 210 36% 98%; /* Very light blue */
+    --popover-foreground: 222.2 84% 14%; /* Darker gray */
+    --primary: 222.2 47.4% 20%; /* Darker blue */
+    --primary-foreground: 210 40% 98%; /* Almost white */
+    --secondary: 210 25% 85%; /* Light gray-blue */
+    --secondary-foreground: 222.2 47.4% 20%; /* Darker blue */
+    --muted: 210 25% 85%; /* Light gray-blue */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Gray */
+    --accent: 210 25% 85%; /* Light gray-blue */
+    --accent-foreground: 222.2 47.4% 20%; /* Darker blue */
+    --destructive: 0 84.2% 65%; /* Softer red */
+    --destructive-foreground: 210 40% 98%; /* Almost white */
+    --border: 210 36% 90%; /* Light blue-gray */
+    --input: 210 36% 90%; /* Light blue-gray */
+    --ring: 222.2 84% 14%; /* Darker gray for contrast */
     --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 12 76% 61%; /* Same chart colors */
+    --chart-2: 173 58% 39%; /* Same chart colors */
+    --chart-3: 197 37% 24%; /* Same chart colors */
+    --chart-4: 43 74% 66%; /* Same chart colors */
+    --chart-5: 27 87% 67%; /* Same chart colors */
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: 222.2 84% 4.9%; /* Dark gray */
+    --foreground: 210 40% 98%; /* Almost white */
+    --card: 222.2 84% 4.9%; /* Dark gray */
+    --card-foreground: 210 40% 98%; /* Almost white */
+    --popover: 222.2 84% 4.9%; /* Dark gray */
+    --popover-foreground: 210 40% 98%; /* Almost white */
+    --primary: 210 40% 98%; /* Almost white */
+    --primary-foreground: 222.2 47.4% 11.2%; /* Dark blue */
+    --secondary: 217.2 32.6% 17.5%; /* Dark gray-blue */
+    --secondary-foreground: 210 40% 98%; /* Almost white */
+    --muted: 217.2 32.6% 17.5%; /* Dark gray-blue */
+    --muted-foreground: 215 20.2% 65.1%; /* Gray */
+    --accent: 217.2 32.6% 17.5%; /* Dark gray-blue */
+    --accent-foreground: 210 40% 98%; /* Almost white */
+    --destructive: 0 62.8% 30.6%; /* Dark red */
+    --destructive-foreground: 210 40% 98%; /* Almost white */
+    --border: 217.2 32.6% 17.5%; /* Dark gray-blue */
+    --input: 217.2 32.6% 17.5%; /* Dark gray-blue */
+    --ring: 212.7 26.8% 83.9%; /* Light gray-blue */
+    --chart-1: 220 70% 50%; /* Blue */
+    --chart-2: 160 60% 45%; /* Green */
+    --chart-3: 30 80% 55%; /* Orange */
+    --chart-4: 280 65% 60%; /* Purple */
+    --chart-5: 340 75% 55%; /* Pink */
   }
 }
 
