@@ -35,7 +35,9 @@ export default function RootLayout({
         <body className="dark">
           <div className="grid h-screen grid-rows-[auto,1fr]">
             <TopNav />
-            <main className="overflow-y-scroll">{children}</main>
+            <main className="scrollbar scrollbar-track-transparent scrollbar-thumb-slate-800 overflow-y-scroll">
+              {children}
+            </main>
             {modal}
           </div>
 
