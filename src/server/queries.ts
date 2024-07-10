@@ -4,6 +4,11 @@ import { auth } from "@clerk/nextjs/server";
 import { images } from "./db/schema";
 import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+// import { utapi } from "~/utils/uploadthing";
+
+import { UTApi } from "uploadthing/server";
+
+export const utapi = new UTApi();
 
 export async function getMyImages() {
   const user = auth();
@@ -31,14 +36,18 @@ export async function getImage(id: number) {
 
   return image;
 }
-
 export async function deleteImage(id: number) {
   const user = auth();
   if (!user.userId) throw new Error("Unauthorised");
 
-  await db
+  const fileKey = await db
     .delete(images)
-    .where(and(eq(images.id, id), eq(images.userId, user.userId)));
+    .where(and(eq(images.id, id), eq(images.userId, user.userId)))
+    .returning({ key: images.key });
+
+  if (!fileKey[0]) throw new Error("Image not found");
+
+  await utapi.deleteFiles(fileKey[0].key);
 
   redirect("/");
 }
