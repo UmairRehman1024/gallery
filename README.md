@@ -1,4 +1,4 @@
-- [] make scrollbar look better
+- [x] make scrollbar look better
 - [] add close button to modal
 - [] add ai image generator
 - [] select multiple items to delete
