@@ -9,6 +9,7 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { Toaster } from "~/components/ui/sonner";
+import { ThemeProvider } from "~/components/ui/theme-provider";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -32,17 +33,20 @@ export default function RootLayout({
            */
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
-        <body className="">
-          <div className="grid h-screen grid-rows-[auto,1fr]">
-            <TopNav />
-            <main className="scrollbar scrollbar-track-transparent scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-800 overflow-y-scroll">
-              {children}
-            </main>
-            {modal}
-          </div>
 
-          <div id="modal-root"></div>
-          <Toaster />
+        <body className="">
+          <ThemeProvider attribute="class" defaultTheme="system">
+            <div className="grid h-screen grid-rows-[auto,1fr]">
+              <TopNav />
+              <main className="scrollbar scrollbar-track-transparent scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-800 overflow-y-scroll">
+                {children}
+              </main>
+              {modal}
+            </div>
+
+            <div id="modal-root"></div>
+            <Toaster />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

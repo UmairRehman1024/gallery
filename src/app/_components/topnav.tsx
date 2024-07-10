@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { SimpleUploadButton } from "./simple-upload-button";
+import { ThemeToggle } from "~/components/theme-toggle";
 
 export function TopNav() {
   return (
@@ -11,6 +12,7 @@ export function TopNav() {
           <SignInButton />
         </SignedOut>
         <SignedIn>
+          <ThemeToggle />
           <SimpleUploadButton />
           <UserButton />
         </SignedIn>
