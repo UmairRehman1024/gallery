@@ -54,13 +54,18 @@ export function SimpleUploadButton() {
   const router = useRouter();
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
-    onUploadBegin() {
+    onUploadBegin(filename) {
       toast.loading("Uploading...", {
-        id: "upload-begin",
+        id: "upload",
+      });
+    },
+    onUploadError(e) {
+      toast.error("Upload failed", {
+        id: "upload",
       });
     },
     onClientUploadComplete() {
-      toast.dismiss("upload-begin");
+      toast.dismiss("upload");
       toast.success("Upload Complete!");
       router.refresh();
     },
