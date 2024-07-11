@@ -4,16 +4,27 @@ import Link from "next/link";
 import { getMyImages } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
-
 async function Images() {
   const images = await getMyImages();
   return (
     <div className="flex flex-wrap justify-center gap-4 p-2">
       {images.map((image) => (
-        <div key={image.id} className="flex h-52 w-52 flex-col justify-center">
-          <Link href={`/img/${image.id}`}>
-            <Image src={image.url} alt={image.name} width={192} height={192} />
-            <div className="text-center">{image.name}</div>
+        <div
+          key={image.id}
+          className="flex h-52 w-52 flex-col items-center justify-center"
+        >
+          <Link href={`/img/${image.id}`} className="h-full w-full">
+            <div className="relative h-5/6 w-full">
+              <Image
+                src={image.url}
+                alt={image.name}
+                fill
+                objectFit="contain"
+                className="h-full w-full"
+                sizes="208px"
+              />
+            </div>
+            <div className="mt-2 h-4 text-center">{image.name}</div>
           </Link>
         </div>
       ))}

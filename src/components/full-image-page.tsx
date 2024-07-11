@@ -18,6 +18,7 @@ export default async function FullPageImageView(props: { id: number }) {
           priority
           className="object-contain"
           alt={image.name}
+          sizes="calc(100vw - 249px)"
         />
       </div>
       <div className="flex w-56 flex-shrink-0 flex-col gap-2 border-l">
