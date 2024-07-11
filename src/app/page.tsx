@@ -19,8 +19,7 @@ async function Images() {
                 src={image.url}
                 alt={image.name}
                 fill
-                objectFit="contain"
-                className="h-full w-full"
+                className="h-full w-full object-contain"
                 sizes="208px"
               />
             </div>
