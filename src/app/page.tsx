@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getMyImages } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
+
 async function Images() {
   const images = await getMyImages();
   return (
@@ -23,7 +24,9 @@ async function Images() {
                 sizes="208px"
               />
             </div>
-            <div className="mt-2 h-4 text-center">{image.name}</div>
+            <div className="h-8 overflow-hidden text-ellipsis text-nowrap pt-2 text-center">
+              {image.name}
+            </div>
           </Link>
         </div>
       ))}
