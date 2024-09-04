@@ -9,6 +9,7 @@ async function Images() {
   const images = await getMyImages();
   return (
     <div className="flex flex-wrap justify-center gap-4 p-2">
+      <Album></Album>
       {images.map((image) => (
         <div
           key={image.id}
@@ -46,5 +47,15 @@ export default async function HomePage() {
         <Images />
       </SignedIn>
     </main>
+  );
+}
+
+function Album() {
+  return (
+    <div className="flex h-52 w-52 items-center justify-center">
+      <div className="flex h-1/3 w-3/4 items-center justify-center rounded border-4 border-slate-300 shadow">
+        <p>Album</p>
+      </div>
+    </div>
   );
 }
