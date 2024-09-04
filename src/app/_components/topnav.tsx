@@ -1,6 +1,8 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { SimpleUploadButton } from "./simple-upload-button";
 import { ThemeToggle } from "~/app/_components/theme-toggle";
+import { Button } from "~/components/ui/button";
+import { addAlbum } from "~/server/queries";
 
 export function TopNav() {
   return (
@@ -12,11 +14,27 @@ export function TopNav() {
           <SignInButton />
         </SignedOut>
         <SignedIn>
+          <AlbumButton />
           <ThemeToggle />
           <SimpleUploadButton />
           <UserButton />
         </SignedIn>
       </div>
     </nav>
+  );
+}
+
+function AlbumButton() {
+  return (
+    <form
+      action={async () => {
+        "use server";
+
+        const album = await addAlbum();
+        console.log(album);
+      }}
+    >
+      <Button type="submit">Add Album</Button>
+    </form>
   );
 }

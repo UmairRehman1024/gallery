@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "./db";
 import { auth } from "@clerk/nextjs/server";
-import { images } from "./db/schema";
+import { albums, images } from "./db/schema";
 import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
@@ -48,4 +48,21 @@ export async function deleteImage(id: number) {
   await utapi.deleteFiles(fileKey[0].key);
 
   redirect("/");
+}
+
+export async function addAlbum() {
+  //take name of album
+
+  const user = auth();
+  if (!user.userId) throw new Error("Unauthorised");
+
+  const album = await db
+    .insert(albums)
+    .values({
+      name: "Winter",
+      userId: user.userId,
+    })
+    .returning();
+
+  return album;
 }
