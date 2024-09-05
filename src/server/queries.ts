@@ -64,17 +64,47 @@ export async function addAlbum() {
     })
     .returning();
 
-  return album;
+  console.log(album);
+
+  redirect("/");
 }
 
-export async function getMyAlbums() {
+export async function getMyAlbums(parentId: number | null) {
   const user = auth();
 
   if (!user.userId) throw new Error("Unauthorised");
 
-  const albums = await db.query.albums.findMany({
-    where: (model, { eq }) => eq(model.userId, user.userId),
-    orderBy: (model, { desc }) => desc(model.id),
+  if (!parentId) {
+    //all albums on homepage
+    const albums = await db.query.albums.findMany({
+      where: (model, { and, eq, isNull }) =>
+        and(eq(model.userId, user.userId), isNull(model.parentId)),
+      orderBy: (model, { desc }) => desc(model.id),
+    });
+    return albums;
+  } else {
+    // albums in another album
+    const albums = await db.query.albums.findMany({
+      where: (model, { and, eq }) =>
+        and(eq(model.userId, user.userId), eq(model.parentId, parentId)),
+      orderBy: (model, { desc }) => desc(model.id),
+    });
+    return albums;
+  }
+}
+
+export async function getAlbumID(albumName: string | undefined) {
+  const user = auth();
+
+  if (!user.userId) throw new Error("Unauthorised");
+
+  if (albumName == undefined) return null;
+
+  const album = await db.query.albums.findFirst({
+    where: (model, { eq }) => eq(model.name, albumName),
   });
-  return albums;
+
+  if (album === undefined) throw new Error("album ID not found");
+
+  return album.id;
 }

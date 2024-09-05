@@ -1,15 +1,30 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import { getMyAlbums, getMyImages } from "~/server/queries";
+import { redirect } from "next/navigation";
+import { getMyAlbums, getMyImages, getAlbumID } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
-async function Images() {
+async function Images(props: { albumURL: string }) {
   const images = await getMyImages();
-  const albums = await getMyAlbums();
+
+  console.log(props.albumURL);
+
+  let albums;
+
+  if (props.albumURL) {
+    const currentAlbumID = await getAlbumID(
+      props.albumURL[props.albumURL.length - 1],
+    );
+    albums = await getMyAlbums(currentAlbumID);
+  } else {
+    albums = await getMyAlbums(null);
+  }
+
   return (
     <div className="flex flex-wrap justify-center gap-4 p-2">
+      <div>{props.albumURL}</div>
       {albums.map((album) => (
         <Album key={album.id} name={album.name}></Album>
       ))}
@@ -39,7 +54,11 @@ async function Images() {
   );
 }
 
-export default async function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: { album: string };
+}) {
   return (
     <main className="">
       <SignedOut>
@@ -48,7 +67,7 @@ export default async function HomePage() {
         </div>
       </SignedOut>
       <SignedIn>
-        <Images />
+        <Images albumURL={params.album} />
       </SignedIn>
     </main>
   );
@@ -57,9 +76,12 @@ export default async function HomePage() {
 function Album(props: { name: string }) {
   return (
     <div className="flex h-52 w-52 items-center justify-center">
-      <div className="flex h-1/3 w-3/4 items-center justify-center rounded border-4 border-slate-300 shadow">
+      <Link
+        className="flex h-1/3 w-3/4 items-center justify-center rounded border-4 border-slate-300 shadow"
+        href={props.name}
+      >
         <p>{props.name}</p>
-      </div>
+      </Link>
     </div>
   );
 }
