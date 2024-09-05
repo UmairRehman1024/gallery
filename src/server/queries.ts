@@ -66,3 +66,15 @@ export async function addAlbum() {
 
   return album;
 }
+
+export async function getMyAlbums() {
+  const user = auth();
+
+  if (!user.userId) throw new Error("Unauthorised");
+
+  const albums = await db.query.albums.findMany({
+    where: (model, { eq }) => eq(model.userId, user.userId),
+    orderBy: (model, { desc }) => desc(model.id),
+  });
+  return albums;
+}

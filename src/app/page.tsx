@@ -1,15 +1,19 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import { getMyImages } from "~/server/queries";
+import { getMyAlbums, getMyImages } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
 async function Images() {
   const images = await getMyImages();
+  const albums = await getMyAlbums();
   return (
     <div className="flex flex-wrap justify-center gap-4 p-2">
-      <Album></Album>
+      {albums.map((album) => (
+        <Album key={album.id} name={album.name}></Album>
+      ))}
+
       {images.map((image) => (
         <div
           key={image.id}
@@ -50,11 +54,11 @@ export default async function HomePage() {
   );
 }
 
-function Album() {
+function Album(props: { name: string }) {
   return (
     <div className="flex h-52 w-52 items-center justify-center">
       <div className="flex h-1/3 w-3/4 items-center justify-center rounded border-4 border-slate-300 shadow">
-        <p>Album</p>
+        <p>{props.name}</p>
       </div>
     </div>
   );
