@@ -29,6 +29,8 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import React from "react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   albumName: z
@@ -41,6 +43,8 @@ const formSchema = z.object({
 export function AlbumButton() {
   const path = usePathname();
 
+  const [open, setOpen] = React.useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,10 +54,11 @@ export function AlbumButton() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     addAlbum(values.albumName, path);
+    setOpen(false);
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Add Album</Button>
       </DialogTrigger>
@@ -68,7 +73,7 @@ export function AlbumButton() {
               name="albumName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Album Name</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter your album name" {...field} />
                   </FormControl>
