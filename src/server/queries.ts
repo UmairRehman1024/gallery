@@ -50,7 +50,7 @@ export async function deleteImage(id: number) {
   redirect("/");
 }
 
-export async function addAlbum() {
+export async function addAlbum(name: string) {
   //take name of album
 
   const user = auth();
@@ -59,14 +59,15 @@ export async function addAlbum() {
   const album = await db
     .insert(albums)
     .values({
-      name: "Winter",
+      name,
       userId: user.userId,
     })
     .returning();
 
   console.log(album);
 
-  redirect("/");
+  //redirect to new album
+  redirect(`/${name}`);
 }
 
 export async function getMyAlbums(parentId: number | null) {

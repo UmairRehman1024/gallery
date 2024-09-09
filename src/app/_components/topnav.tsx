@@ -3,6 +3,9 @@ import { SimpleUploadButton } from "./simple-upload-button";
 import { ThemeToggle } from "~/app/_components/theme-toggle";
 import { Button } from "~/components/ui/button";
 import { addAlbum } from "~/server/queries";
+import Router from "next/router";
+import { useRouter } from "next/navigation";
+import { AlbumButton } from "./add-album-button";
 
 export function TopNav() {
   return (
@@ -21,20 +24,5 @@ export function TopNav() {
         </SignedIn>
       </div>
     </nav>
-  );
-}
-
-function AlbumButton() {
-  return (
-    <form
-      action={async () => {
-        "use server";
-
-        const album = await addAlbum();
-        console.log(album);
-      }}
-    >
-      <Button type="submit">Add Album</Button>
-    </form>
   );
 }
