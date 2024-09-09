@@ -3,7 +3,7 @@ import { db } from "./db";
 import { auth } from "@clerk/nextjs/server";
 import { albums, images } from "./db/schema";
 import { and, eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { UTApi } from "uploadthing/server";
 
@@ -104,7 +104,7 @@ export async function getAlbumID(albumName: string | undefined) {
     where: (model, { eq }) => eq(model.name, albumName),
   });
 
-  if (album === undefined) throw new Error("album ID not found");
+  if (album === undefined) notFound();
 
   return album.id;
 }
