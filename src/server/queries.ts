@@ -1,4 +1,6 @@
+"use server";
 import "server-only";
+
 import { db } from "./db";
 import { auth } from "@clerk/nextjs/server";
 import { albums, images } from "./db/schema";
@@ -6,6 +8,7 @@ import { and, eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 
 import { UTApi } from "uploadthing/server";
+import { z } from "zod";
 
 export async function getMyImages() {
   const user = auth();
@@ -50,21 +53,42 @@ export async function deleteImage(id: number) {
   redirect("/");
 }
 
-export async function addAlbum(name: string) {
-  //take name of album
+function getLastPathEntry(path: string): string {
+  // Split the path by "/"
+  const segments = path.split("/");
 
+  // Filter out any empty segments (to handle leading/trailing slashes)
+  const filteredSegments = segments.filter((segment) => segment.length > 0);
+
+  // Return the last entry, or an empty string if none exists
+  return filteredSegments.length > 0
+    ? (filteredSegments[filteredSegments.length - 1] as string)
+    : "";
+}
+
+export async function addAlbum(name: string, path: string) {
   const user = auth();
   if (!user.userId) throw new Error("Unauthorised");
+
+  //getParentId
+  let parentId;
+  if (path == "/") {
+    parentId = null;
+  } else {
+    const parent = await db.query.albums.findFirst({
+      where: (model, { eq }) => eq(model.name, getLastPathEntry(path)),
+    });
+    parentId = parent?.id;
+  }
 
   const album = await db
     .insert(albums)
     .values({
       name,
       userId: user.userId,
+      parentId,
     })
     .returning();
-
-  console.log(album);
 
   //redirect to new album
   redirect(`/${name}`);
