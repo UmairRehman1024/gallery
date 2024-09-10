@@ -1,7 +1,4 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { getMyAlbums, getMyImages, getAlbumID } from "~/server/queries";
 import { Images } from "../_components/images";
 import { Albums } from "../_components/albums";
 import { PreviousAlbumButton } from "../_components/previous-album";

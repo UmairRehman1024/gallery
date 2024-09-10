@@ -1,5 +1,5 @@
 import { Album } from "~/components/album";
-import { getAlbumID, getMyAlbums } from "~/server/queries";
+import { getAlbumID, getMyAlbums } from "~/server/queries/album";
 
 export async function Albums(props: { albumURL: string[] }) {
   let albums;

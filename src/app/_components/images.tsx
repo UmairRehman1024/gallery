@@ -1,12 +1,7 @@
 import Link from "next/link";
-import {
-  getAlbumID,
-  getMyAlbums,
-  getMyImages,
-  getMyImagesParent,
-} from "~/server/queries";
+import { getAlbumID } from "~/server/queries/album";
 import Image from "next/image";
-import { Album } from "~/components/album";
+import { getMyAlbumImages } from "~/server/queries/image";
 
 export async function Images(props: { albumURL: string[] }) {
   let images;
@@ -15,9 +10,9 @@ export async function Images(props: { albumURL: string[] }) {
     const currentAlbumID = await getAlbumID(
       props.albumURL[props.albumURL.length - 1],
     );
-    images = await getMyImagesParent(currentAlbumID);
+    images = await getMyAlbumImages(currentAlbumID);
   } else {
-    images = await getMyImagesParent(null);
+    images = await getMyAlbumImages(null);
   }
 
   return (

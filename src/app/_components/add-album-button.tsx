@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
-import { addAlbum } from "~/server/queries";
+import { addAlbum } from "~/server/queries/album";
 import {
   Dialog,
   DialogContent,
