@@ -5,5 +5,6 @@
 - [] use existing items as prompt for ai
 - [] nlp to search for images
 
-- [] close dialog on submit
-- [] show only images and albums that are in that album
+- [x] close dialog on submit
+- [x] show only images and albums that are in that album
+- [x]previous album button

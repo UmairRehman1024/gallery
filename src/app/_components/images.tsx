@@ -1,31 +1,27 @@
 import Link from "next/link";
-import { getAlbumID, getMyAlbums, getMyImages } from "~/server/queries";
+import {
+  getAlbumID,
+  getMyAlbums,
+  getMyImages,
+  getMyImagesParent,
+} from "~/server/queries";
 import Image from "next/image";
 import { Album } from "~/components/album";
 
-export async function Images(props: { albumURL: string }) {
-  const images = await getMyImages();
-
-  console.log(props.albumURL);
-
-  let albums;
+export async function Images(props: { albumURL: string[] }) {
+  let images;
 
   if (props.albumURL) {
     const currentAlbumID = await getAlbumID(
       props.albumURL[props.albumURL.length - 1],
     );
-    albums = await getMyAlbums(currentAlbumID);
+    images = await getMyImagesParent(currentAlbumID);
   } else {
-    albums = await getMyAlbums(null);
+    images = await getMyImagesParent(null);
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 p-2">
-      <div>{props.albumURL}</div>
-      {albums.map((album) => (
-        <Album key={album.id} name={album.name}></Album>
-      ))}
-
+    <>
       {images.map((image) => (
         <div
           key={image.id}
@@ -47,6 +43,6 @@ export async function Images(props: { albumURL: string }) {
           </Link>
         </div>
       ))}
-    </div>
+    </>
   );
 }

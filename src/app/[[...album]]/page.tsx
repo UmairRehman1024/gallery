@@ -3,13 +3,15 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getMyAlbums, getMyImages, getAlbumID } from "~/server/queries";
 import { Images } from "../_components/images";
+import { Albums } from "../_components/albums";
+import { PreviousAlbumButton } from "../_components/previous-album";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage({
   params,
 }: {
-  params: { album: string };
+  params: { album: string[] };
 }) {
   return (
     <main className="">
@@ -19,7 +21,11 @@ export default async function HomePage({
         </div>
       </SignedOut>
       <SignedIn>
-        <Images albumURL={params.album} />
+        <div className="flex flex-wrap justify-center gap-4 p-2">
+          {params.album && <PreviousAlbumButton albumURL={params.album} />}
+          <Albums albumURL={params.album} />
+          <Images albumURL={params.album} />
+        </div>
       </SignedIn>
     </main>
   );
