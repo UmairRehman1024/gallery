@@ -15,5 +15,7 @@
 - [] recreate the upstash redis rate-limiter
 
 - [] change link to form with action to chnage the current album in albums_server.tsx
+- [] figure out way to update images and albums when action return with data
+  . maybe store images in zustand store and have the shown images be dependant on the store
 
   -[] save the state locally and retrive

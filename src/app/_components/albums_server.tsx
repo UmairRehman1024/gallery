@@ -17,11 +17,17 @@ export async function AlbumsServer() {
         //   name={album.name}
         //   currentAlbumURL={props.albumURL}
         // ></Album>
-        <div className="flex h-52 w-52 items-center justify-center">
-          <div className="flex h-1/3 w-3/4 items-center justify-center rounded border-4 border-slate-300 shadow">
+        <form
+          className="flex h-52 w-52 items-center justify-center"
+          // onSubmit={}
+        >
+          <button
+            className="flex h-1/3 w-3/4 items-center justify-center rounded border-4 border-slate-300 shadow"
+            type="submit"
+          >
             <p>Album</p>
-          </div>
-        </div>
+          </button>
+        </form>
       ))}
     </>
   );
