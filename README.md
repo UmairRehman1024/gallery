@@ -13,3 +13,7 @@
 - [] add images from upsplash
 
 - [] recreate the upstash redis rate-limiter
+
+- [] change link to form with action to chnage the current album in albums_server.tsx
+
+  -[] save the state locally and retrive
