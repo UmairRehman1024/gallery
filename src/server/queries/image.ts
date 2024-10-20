@@ -1,3 +1,5 @@
+"use server";
+
 import "server-only";
 import { auth } from "@clerk/nextjs/server";
 
@@ -5,7 +7,7 @@ import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 import { UTApi } from "uploadthing/server";
-import { getLastPathEntry } from "~/lib/getLastPathEntry";
+import { getLastPathEntry } from "~/utils/getLastPathEntry";
 import { db } from "../db";
 import { images } from "../db/schema";
 

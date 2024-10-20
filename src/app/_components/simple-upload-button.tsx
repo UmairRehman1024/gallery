@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useUploadThing } from "~/utils/uploadthing";
 
 import { toast } from "sonner";
+import { useAlbumStore } from "~/providers/album-store-provider";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -11,11 +12,16 @@ type Input = Parameters<typeof useUploadThing>;
 const useUploadThingInputProps = (...args: Input) => {
   const $ut = useUploadThing(...args);
 
+  const { getCurrent } = useAlbumStore((state) => state);
+
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const selectedFiles = Array.from(e.target.files);
-    const result = await $ut.startUpload(selectedFiles);
+    const result = await $ut.startUpload(selectedFiles, {
+      albumID: getCurrent(),
+    });
+    //TODO: change albumID to be the current album
 
     console.log("uploaded files", result);
     // TODO: persist result in state maybe?

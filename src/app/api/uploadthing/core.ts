@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
+import { z } from "zod";
 import { db } from "~/server/db";
 import { images } from "~/server/db/schema";
 import { ratelimit } from "~/server/ratelimit";
@@ -11,8 +12,9 @@ const f = createUploadthing();
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
   imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 10 } })
+    .input(z.object({ albumID: z.number().nullable() }))
     // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
+    .middleware(async ({ req, input }) => {
       // This code runs on your server before upload
       const user = auth();
 
@@ -23,8 +25,11 @@ export const ourFileRouter = {
 
       if (!success) throw new Error("Ratelimited");
 
+      //get current album
+      //if not in album, default to home("/")
+
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.userId };
+      return { userId: user.userId, albumID: input.albumID };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
@@ -35,6 +40,7 @@ export const ourFileRouter = {
         url: file.url,
         userId: metadata.userId,
         key: file.key,
+        albumId: metadata.albumID,
       });
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback

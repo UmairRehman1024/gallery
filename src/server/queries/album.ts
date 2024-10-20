@@ -8,7 +8,7 @@ import { and, eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 
 import { UTApi } from "uploadthing/server";
-import { getLastPathEntry } from "~/lib/getLastPathEntry";
+import { getLastPathEntry } from "~/utils/getLastPathEntry";
 
 export async function addAlbum(name: string, path: string) {
   const user = auth();

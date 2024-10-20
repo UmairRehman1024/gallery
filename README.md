@@ -11,3 +11,5 @@
 - [] sidemenu for folders
 - [] make route for folders ids instead of name
 - [] add images from upsplash
+
+- [] recreate the upstash redis rate-limiter

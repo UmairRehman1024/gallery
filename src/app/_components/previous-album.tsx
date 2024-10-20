@@ -3,16 +3,24 @@ import { redirect, useRouter } from "next/navigation";
 import Router from "next/router";
 import { URL } from "url";
 import { Button } from "~/components/ui/button";
+import { useAlbumStore } from "~/providers/album-store-provider";
 
 export function PreviousAlbumButton(props: { albumURL: string[] }) {
   const router = useRouter();
 
-  const handleOnClick = () => {
-    // Remove top-level album (last element from the array)
-    const pathArray = removeLastElement(props.albumURL);
+  const { IDs, pop } = useAlbumStore((state) => state);
 
-    // Convert array back to a string path
-    const path = pathArray.length === 0 ? "/" : `/${pathArray.join("/")}`;
+  const handleOnClick = () => {
+    // // Remove top-level album (last element from the array)
+    // const pathArray = removeLastElement(props.albumURL);
+
+    // // Convert array to a string path
+    // const path = pathArray.length === 0 ? "/" : `/${pathArray.join("/")}`;
+
+    // Convert array to a string path
+    const path = IDs.length === 0 ? "/" : `/${IDs.join("/")}`;
+
+    pop();
 
     // Push the new path
     router.push(path);
@@ -83,3 +91,10 @@ function removeLastElement(pathArray: string[]): string[] {
 
   return newPathArray;
 }
+
+//previous-album
+//add-album
+//album-button
+
+//albums
+//images

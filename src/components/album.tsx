@@ -1,11 +1,15 @@
 import Link from "next/link";
 
-export function Album(props: { name: string; currentAlbumURL: string[] }) {
+export function Album(props: {
+  id: number;
+  name: string;
+  currentAlbumURL: string[];
+}) {
   let path;
   if (props.currentAlbumURL == undefined) {
     path = props.name;
   } else {
-    path = `/${props.currentAlbumURL.join("/")}/${props.name}`;
+    path = `/${props.currentAlbumURL.join("/")}/${props.id}`;
   }
   return (
     <div className="flex h-52 w-52 items-center justify-center">

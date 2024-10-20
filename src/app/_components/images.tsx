@@ -1,27 +1,32 @@
-import Link from "next/link";
-import { getAlbumID } from "~/server/queries/album";
-import Image from "next/image";
+"use client";
+
 import { getMyAlbumImages } from "~/server/queries/image";
+import { useAlbumStore } from "~/providers/album-store-provider";
+import { GalleryImage } from "./image";
+import Link from "next/link";
+import Image from "next/image";
 
 export async function Images(props: { albumURL: string[] }) {
-  let images;
+  // let images;
 
-  if (props.albumURL) {
-    const currentAlbumID = await getAlbumID(
-      props.albumURL[props.albumURL.length - 1],
-    );
-    images = await getMyAlbumImages(currentAlbumID);
-  } else {
-    images = await getMyAlbumImages(null);
-  }
+  // if (props.albumURL) {
+  //   const currentAlbumID = await getAlbumID(
+  //     props.albumURL[props.albumURL.length - 1],
+  //   );
+  //   images = await getMyAlbumImages(currentAlbumID);
+  // } else {
+  //   images = await getMyAlbumImages(null);
+  // }
+
+  const { getCurrent } = useAlbumStore((state) => state);
+
+  // const images = await getMyAlbumImages(getCurrent());
+  //cant call server action in client component without form or event handler
 
   return (
     <>
       {images.map((image) => (
-        <div
-          key={image.id}
-          className="flex h-52 w-52 flex-col items-center justify-center"
-        >
+        <div className="flex h-52 w-52 flex-col items-center justify-center">
           <Link href={`/img/${image.id}`} className="h-full w-full">
             <div className="relative h-5/6 w-full">
               <Image

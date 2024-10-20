@@ -10,6 +10,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { Toaster } from "~/components/ui/sonner";
 import { ThemeProvider } from "~/components/ui/theme-provider";
+import { AlbumStoreProvider } from "~/providers/album-store-provider";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -36,13 +37,15 @@ export default function RootLayout({
 
         <body className="">
           <ThemeProvider attribute="class" defaultTheme="system">
-            <div className="grid h-screen grid-rows-[auto,1fr]">
-              <TopNav />
-              <main className="scrollbar scrollbar-track-transparent scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-800 overflow-y-scroll">
-                {children}
-              </main>
-              {modal}
-            </div>
+            <AlbumStoreProvider>
+              <div className="grid h-screen grid-rows-[auto,1fr]">
+                <TopNav />
+                <main className="overflow-y-scroll scrollbar scrollbar-track-transparent scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-800">
+                  {children}
+                </main>
+                {modal}
+              </div>
+            </AlbumStoreProvider>
 
             <div id="modal-root"></div>
             <Toaster />
