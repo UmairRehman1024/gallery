@@ -38,7 +38,7 @@ export async function addAlbum(name: string, path: string) {
   redirect(`/${path}/${name}`);
 }
 
-export async function getMyAlbums(parentId: number | null) {
+export async function getMyAlbums(parentId: number | undefined) {
   const user = auth();
 
   if (!user.userId) throw new Error("Unauthorised");

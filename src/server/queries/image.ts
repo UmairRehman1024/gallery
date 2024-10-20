@@ -21,7 +21,7 @@ export async function getMyImages() {
   return images;
 }
 
-export async function getMyAlbumImages(AlbumID: number | null) {
+export async function getMyAlbumImages(AlbumID: number | undefined) {
   const user = auth();
 
   if (!user.userId) throw new Error("Unauthorised");

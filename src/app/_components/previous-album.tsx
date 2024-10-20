@@ -4,7 +4,7 @@ import Router from "next/router";
 import { URL } from "url";
 import { Button } from "~/components/ui/button";
 
-export function PreviousAlbumButton(props: { albumURL: string[] }) {
+export function PreviousAlbumButton(props: { albumURL: number[] }) {
   const router = useRouter();
 
   const handleOnClick = () => {
@@ -71,7 +71,7 @@ export function PreviousAlbumButton(props: { albumURL: string[] }) {
 //   return "/";
 // }
 
-function removeLastElement(pathArray: string[]): string[] {
+function removeLastElement(pathArray: number[]): number[] {
   const newPathArray = [...pathArray];
 
   if (newPathArray.length > 1) {
