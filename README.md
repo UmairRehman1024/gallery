@@ -19,3 +19,5 @@
   . maybe store images in zustand store and have the shown images be dependant on the store
 
   -[] save the state locally and retrive
+
+![alt text](image.png)
