@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { Images } from "../_components/images";
-import { Albums } from "../_components/albums";
+import { Images } from "../_components/images_client";
+import { Albums } from "../_components/albums_client";
 import { PreviousAlbumButton } from "../_components/previous-album";
 
 export const dynamic = "force-dynamic";
