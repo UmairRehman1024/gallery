@@ -1,7 +1,8 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { Images } from "../_components/images_client";
-import { Albums } from "../_components/albums_client";
+
 import { PreviousAlbumButton } from "../_components/previous-album";
+import { ImagesServer } from "../_components/images_server";
+import { AlbumsServer } from "../_components/albums_server";
 
 export const dynamic = "force-dynamic";
 
@@ -20,8 +21,8 @@ export default async function HomePage({
       <SignedIn>
         <div className="flex flex-wrap justify-center gap-4 p-2">
           {params.album && <PreviousAlbumButton albumURL={params.album} />}
-          <Albums albumURL={params.album} />
-          <Images albumURL={params.album} />
+          <AlbumsServer />
+          <ImagesServer />
         </div>
       </SignedIn>
     </main>

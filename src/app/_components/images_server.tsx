@@ -1,10 +1,13 @@
-import { getMyAlbumImages } from "~/server/queries/image";
+import { getMyAlbumImages } from "~/server/actions/image";
 import { GalleryImage } from "./image";
 import Link from "next/link";
 import Image from "next/image";
+import { GetInitialImages } from "~/server/queries/image";
 
-export async function ImagesServer(props: { Current: number | null }) {
-  const images = await getMyAlbumImages(props.Current);
+//props: { Current: number | null }
+
+export async function ImagesServer() {
+  const images = await GetInitialImages();
   return (
     <>
       {images.map((image) => (
