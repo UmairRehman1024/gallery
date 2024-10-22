@@ -3,6 +3,7 @@ import { Images } from "../_components/images";
 import { Albums } from "../_components/albums";
 import { PreviousAlbumButton } from "../_components/previous-album";
 import { notFound, redirect } from "next/navigation";
+import { CheckAlbumExists } from "~/server/queries/album";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +25,7 @@ export default async function HomePage({
       </SignedOut>
       <SignedIn>
         <div className="flex flex-wrap justify-center gap-4 p-2">
-          {params.album && <PreviousAlbumButton albumURL={albumURL} />}
+          {albumURL && <PreviousAlbumButton albumURL={albumURL} />}
           <Albums albumURL={albumURL} />
           <Images albumURL={albumURL} />
         </div>
@@ -34,23 +35,21 @@ export default async function HomePage({
 }
 
 function CheckParams(params?: string[]) {
-  let albumURL: number[] = [];
+  let albumURL: number[] | undefined;
   if (params != undefined) {
     albumURL = [];
     params.forEach((param) => {
-      //check if param is number
-
       const paramNumber = Number(param);
-
-      console.log(paramNumber);
 
       if (isNaN(paramNumber)) {
         notFound();
       }
 
-      albumURL?.push(paramNumber);
+      if (!CheckAlbumExists(paramNumber)) {
+        notFound();
+      }
 
-      //check if valid ID
+      albumURL?.push(paramNumber);
     });
   }
   return albumURL;

@@ -1,7 +1,7 @@
 import { Album } from "~/components/album";
-import { getAlbumID, getMyAlbums } from "~/server/queries/album";
+import { getAlbumID, getMyAlbums } from "~/server/actions/album";
 
-export async function Albums(props: { albumURL: number[] }) {
+export async function Albums(props: { albumURL?: number[] }) {
   let albums;
 
   // if (props.albumURL) {

@@ -3,11 +3,11 @@ import Link from "next/link";
 export function Album(props: {
   id: number;
   name: string;
-  currentAlbumURL: number[];
+  currentAlbumURL?: number[];
 }) {
   let path;
   if (props.currentAlbumURL == undefined) {
-    path = props.id.toString();
+    path = `/${props.id.toString()}`;
   } else {
     path = `/${props.currentAlbumURL.join("/")}/${props.id}`;
   }

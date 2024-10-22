@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { getAlbumID } from "~/server/queries/album";
+import { getAlbumID } from "~/server/actions/album";
 import Image from "next/image";
-import { getMyAlbumImages } from "~/server/queries/image";
+import { getMyAlbumImages } from "~/server/actions/image";
 
-export async function Images(props: { albumURL: number[] }) {
+export async function Images(props: { albumURL?: number[] }) {
   let images;
 
   // if (props.albumURL) {
