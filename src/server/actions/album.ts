@@ -3,27 +3,14 @@ import "server-only";
 
 import { db } from "../db";
 import { auth } from "@clerk/nextjs/server";
-import { albums, images } from "../db/schema";
-import { and, eq } from "drizzle-orm";
+import { albums } from "../db/schema";
 import { notFound, redirect } from "next/navigation";
-
-import { UTApi } from "uploadthing/server";
-import { getLastPathEntry } from "~/lib/getLastPathEntry";
 
 export async function addAlbum(name: string, path: string) {
   const user = auth();
   if (!user.userId) throw new Error("Unauthorised");
 
-  //getParentId
-  let parentId;
-  if (path == "/") {
-    parentId = null;
-  } else {
-    const parent = await db.query.albums.findFirst({
-      where: (model, { eq }) => eq(model.name, getLastPathEntry(path)),
-    });
-    parentId = parent?.id;
-  }
+  const parentId = getLastNumber(path);
 
   const album = await db
     .insert(albums)
@@ -35,7 +22,16 @@ export async function addAlbum(name: string, path: string) {
     .returning();
 
   //redirect to new album
-  redirect(`/${path}/${name}`);
+  redirect(`/${path}/${album[0]?.id}`);
+}
+
+function getLastNumber(input: string): number {
+  // Split the string by '/' and get the last element
+  const elements = input.split("/");
+  const lastElement = elements[elements.length - 1];
+
+  // Convert the last element to a number and return it
+  return Number(lastElement);
 }
 
 export async function getMyAlbums(parentId: number | undefined) {
@@ -78,62 +74,62 @@ export async function getAlbumID(albumName: string | undefined) {
   return album.id;
 }
 
-export async function getPreviousAlbumID(currentID: number) {
-  const user = auth();
-  if (!user.userId) throw new Error("Unauthorised");
+// export async function getPreviousAlbumID(currentID: number) {
+//   const user = auth();
+//   if (!user.userId) throw new Error("Unauthorised");
 
-  const parentId = (
-    await db.query.albums.findFirst({
-      where: (model, { eq }) => eq(model.id, currentID),
-    })
-  )?.parentId;
+//   const parentId = (
+//     await db.query.albums.findFirst({
+//       where: (model, { eq }) => eq(model.id, currentID),
+//     })
+//   )?.parentId;
 
-  return parentId;
-}
+//   return parentId;
+// }
 
-export async function getPreviousAlbumIDFromName(
-  currentName: string | undefined,
-) {
-  const user = auth();
-  if (!user.userId) throw new Error("Unauthorised");
+// export async function getPreviousAlbumIDFromName(
+//   currentName: string | undefined,
+// ) {
+//   const user = auth();
+//   if (!user.userId) throw new Error("Unauthorised");
 
-  if (currentName == undefined) return null;
-  const parentId = (
-    await db.query.albums.findFirst({
-      where: (model, { eq }) => eq(model.name, currentName),
-    })
-  )?.parentId;
+//   if (currentName == undefined) return null;
+//   const parentId = (
+//     await db.query.albums.findFirst({
+//       where: (model, { eq }) => eq(model.name, currentName),
+//     })
+//   )?.parentId;
 
-  return parentId;
-}
+//   return parentId;
+// }
 
-export async function redirectPreviousAlbum(currentName: string | undefined) {
-  const user = auth();
-  if (!user.userId) throw new Error("Unauthorised");
+// export async function redirectPreviousAlbum(currentName: string | undefined) {
+//   const user = auth();
+//   if (!user.userId) throw new Error("Unauthorised");
 
-  if (currentName == undefined) return null;
-  const parentId = (
-    await db.query.albums.findFirst({
-      where: (model, { eq }) => eq(model.name, currentName),
-    })
-  )?.parentId;
+//   if (currentName == undefined) return null;
+//   const parentId = (
+//     await db.query.albums.findFirst({
+//       where: (model, { eq }) => eq(model.name, currentName),
+//     })
+//   )?.parentId;
 
-  if (!parentId) redirect("/");
+//   if (!parentId) redirect("/");
 
-  const parent = await db.query.albums.findFirst({
-    where: (model, { eq }) => eq(model.id, parentId),
-  });
+//   const parent = await db.query.albums.findFirst({
+//     where: (model, { eq }) => eq(model.id, parentId),
+//   });
 
-  redirect(`${parent?.name}`);
-}
+//   redirect(`${parent?.id}`);
+// }
 
-export async function getPreviousAlbumIDFrom(currentName: string | undefined) {
-  const user = auth();
-  if (!user.userId) throw new Error("Unauthorised");
+// export async function getPreviousAlbumIDFrom(currentName: string | undefined) {
+//   const user = auth();
+//   if (!user.userId) throw new Error("Unauthorised");
 
-  if (currentName == undefined) return null;
-  const parent = await db.query.albums.findFirst({
-    where: (model, { eq }) => eq(model.name, currentName),
-  });
-  return parent?.id;
-}
+//   if (currentName == undefined) return null;
+//   const parent = await db.query.albums.findFirst({
+//     where: (model, { eq }) => eq(model.name, currentName),
+//   });
+//   return parent?.id;
+// }
