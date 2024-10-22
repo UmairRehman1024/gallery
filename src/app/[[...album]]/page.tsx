@@ -1,9 +1,9 @@
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 import { Images } from "../_components/images";
 import { Albums } from "../_components/albums";
 import { PreviousAlbumButton } from "../_components/previous-album";
 import { notFound, redirect } from "next/navigation";
-import { CheckAlbumExists } from "~/server/queries/album";
+import { CheckAlbumExists, CheckParams } from "~/server/queries/album";
 
 export const dynamic = "force-dynamic";
 
@@ -14,8 +14,6 @@ export default async function HomePage({
 }) {
   //check if params are valid
 
-  const albumURL = await CheckParams(params.album);
-
   return (
     <main className="">
       <SignedOut>
@@ -24,33 +22,19 @@ export default async function HomePage({
         </div>
       </SignedOut>
       <SignedIn>
-        <div className="flex flex-wrap justify-center gap-4 p-2">
-          {albumURL && <PreviousAlbumButton albumURL={albumURL} />}
-          <Albums albumURL={albumURL} />
-          <Images albumURL={albumURL} />
-        </div>
+        <SignedInChildren params={params.album}></SignedInChildren>
       </SignedIn>
     </main>
   );
 }
 
-function CheckParams(params?: string[]) {
-  let albumURL: number[] | undefined;
-  if (params != undefined) {
-    albumURL = [];
-    params.forEach((param) => {
-      const paramNumber = Number(param);
-
-      if (isNaN(paramNumber)) {
-        notFound();
-      }
-
-      if (!CheckAlbumExists(paramNumber)) {
-        notFound();
-      }
-
-      albumURL?.push(paramNumber);
-    });
-  }
-  return albumURL;
+function SignedInChildren(props: { params: string[] | undefined }) {
+  const albumURL = CheckParams(props.params);
+  return (
+    <div className="flex flex-wrap justify-center gap-4 p-2">
+      {albumURL && <PreviousAlbumButton albumURL={albumURL} />}
+      <Albums albumURL={albumURL} />
+      <Images albumURL={albumURL} />
+    </div>
+  );
 }
