@@ -1,3 +1,5 @@
+import "server-only";
+
 import { auth } from "@clerk/nextjs/server";
 import { db } from "../db";
 import { notFound } from "next/navigation";

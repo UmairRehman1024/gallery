@@ -10,7 +10,14 @@ export async function addAlbum(name: string, path: string) {
   const user = auth();
   if (!user.userId) throw new Error("Unauthorised");
 
-  const parentId = getLastNumber(path);
+  let parentId;
+
+  if (path == "/") {
+    parentId = null;
+  } else {
+    parentId = getLastNumber(path);
+  }
+  console.log(path);
 
   const album = await db
     .insert(albums)
@@ -21,8 +28,12 @@ export async function addAlbum(name: string, path: string) {
     })
     .returning();
 
+  const redirectPath = `${album[0]?.id}`;
+
+  console.log(redirectPath);
+
   //redirect to new album
-  redirect(`/${path}/${album[0]?.id}`);
+  redirect(redirectPath);
 }
 
 function getLastNumber(input: string): number {
@@ -74,19 +85,6 @@ export async function getAlbumID(albumName: string | undefined) {
   return album.id;
 }
 
-// export async function getPreviousAlbumID(currentID: number) {
-//   const user = auth();
-//   if (!user.userId) throw new Error("Unauthorised");
-
-//   const parentId = (
-//     await db.query.albums.findFirst({
-//       where: (model, { eq }) => eq(model.id, currentID),
-//     })
-//   )?.parentId;
-
-//   return parentId;
-// }
-
 // export async function getPreviousAlbumIDFromName(
 //   currentName: string | undefined,
 // ) {
@@ -133,3 +131,30 @@ export async function getAlbumID(albumName: string | undefined) {
 //   });
 //   return parent?.id;
 // }
+
+export async function redirectToPreviousAlbumID(formData: FormData) {
+  const currentID = formData.get("currentID");
+  if (!currentID) throw new Error("CurrentID is null");
+
+  console.log(currentID);
+
+  const currentIDNumber = Number(currentID);
+
+  console.log(currentIDNumber);
+
+  if (isNaN(currentIDNumber))
+    throw new Error("CurrentID is not a valid number");
+
+  const user = auth();
+  if (!user.userId) throw new Error("Unauthorised");
+
+  const parentId = (
+    await db.query.albums.findFirst({
+      where: (model, { eq }) => eq(model.id, currentIDNumber),
+    })
+  )?.parentId;
+
+  if (parentId == null) redirect("/");
+
+  redirect(`/${parentId}`);
+}
