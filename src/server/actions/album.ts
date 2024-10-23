@@ -85,6 +85,53 @@ export async function getAlbumID(albumName: string | undefined) {
   return album.id;
 }
 
+// export async function getPreviousAlbumIDFromName(
+//   currentName: string | undefined,
+// ) {
+//   const user = auth();
+//   if (!user.userId) throw new Error("Unauthorised");
+
+//   if (currentName == undefined) return null;
+//   const parentId = (
+//     await db.query.albums.findFirst({
+//       where: (model, { eq }) => eq(model.name, currentName),
+//     })
+//   )?.parentId;
+
+//   return parentId;
+// }
+
+// export async function redirectPreviousAlbum(currentName: string | undefined) {
+//   const user = auth();
+//   if (!user.userId) throw new Error("Unauthorised");
+
+//   if (currentName == undefined) return null;
+//   const parentId = (
+//     await db.query.albums.findFirst({
+//       where: (model, { eq }) => eq(model.name, currentName),
+//     })
+//   )?.parentId;
+
+//   if (!parentId) redirect("/");
+
+//   const parent = await db.query.albums.findFirst({
+//     where: (model, { eq }) => eq(model.id, parentId),
+//   });
+
+//   redirect(`${parent?.id}`);
+// }
+
+// export async function getPreviousAlbumIDFrom(currentName: string | undefined) {
+//   const user = auth();
+//   if (!user.userId) throw new Error("Unauthorised");
+
+//   if (currentName == undefined) return null;
+//   const parent = await db.query.albums.findFirst({
+//     where: (model, { eq }) => eq(model.name, currentName),
+//   });
+//   return parent?.id;
+// }
+
 export async function redirectToPreviousAlbumID(formData: FormData) {
   const currentID = formData.get("currentID");
   if (!currentID) throw new Error("CurrentID is null");
