@@ -7,11 +7,12 @@ import { CheckAlbumExists, CheckParams } from "~/server/queries/album";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage({
-  params,
-}: {
-  params: { album?: string[] };
-}) {
+export default async function HomePage(
+  props: {
+    params: Promise<{ album?: string[] }>;
+  }
+) {
+  const params = await props.params;
   //check if params are valid
 
   return (
