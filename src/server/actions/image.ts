@@ -5,7 +5,6 @@ import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 import { UTApi } from "uploadthing/server";
-import { getLastPathEntry } from "~/lib/getLastPathEntry";
 import { db } from "../db";
 import { images } from "../db/schema";
 
@@ -21,7 +20,7 @@ export async function getMyImages() {
   return images;
 }
 
-export async function getMyAlbumImages(AlbumID: number | null) {
+export async function getMyAlbumImages(AlbumID: number | undefined) {
   const user = auth();
 
   if (!user.userId) throw new Error("Unauthorised");

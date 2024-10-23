@@ -1,18 +1,24 @@
 import Link from "next/link";
-import { getAlbumID } from "~/server/queries/album";
+import { getAlbumID } from "~/server/actions/album";
 import Image from "next/image";
-import { getMyAlbumImages } from "~/server/queries/image";
+import { getMyAlbumImages } from "~/server/actions/image";
 
-export async function Images(props: { albumURL: string[] }) {
+export async function Images(props: { albumURL?: number[] }) {
   let images;
 
+  // if (props.albumURL) {
+  //   const currentAlbumID = await getAlbumID(
+  //     props.albumURL[props.albumURL.length - 1],
+  //   );
+  //   images = await getMyAlbumImages(currentAlbumID);
+  // } else {
+  //   images = await getMyAlbumImages(null);
+  // }
+
   if (props.albumURL) {
-    const currentAlbumID = await getAlbumID(
-      props.albumURL[props.albumURL.length - 1],
-    );
-    images = await getMyAlbumImages(currentAlbumID);
+    images = await getMyAlbumImages(props.albumURL[props.albumURL.length - 1]);
   } else {
-    images = await getMyAlbumImages(null);
+    images = await getMyAlbumImages(undefined);
   }
 
   return (
