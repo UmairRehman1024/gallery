@@ -8,17 +8,17 @@ import { UTApi } from "uploadthing/server";
 import { db } from "../db";
 import { images } from "../db/schema";
 
-export async function getMyImages() {
-  const user = auth();
+// export async function getMyImages() {
+//   const user = auth();
 
-  if (!user.userId) throw new Error("Unauthorised");
+//   if (!user.userId) throw new Error("Unauthorised");
 
-  const images = await db.query.images.findMany({
-    where: (model, { eq }) => eq(model.userId, user.userId),
-    orderBy: (model, { desc }) => desc(model.id),
-  });
-  return images;
-}
+//   const images = await db.query.images.findMany({
+//     where: (model, { eq }) => eq(model.userId, user.userId),
+//     orderBy: (model, { desc }) => desc(model.id),
+//   });
+//   return images;
+// }
 
 export async function getMyAlbumImages(AlbumID: number | undefined) {
   const user = auth();
@@ -63,14 +63,18 @@ export async function deleteImage(id: number) {
   const user = auth();
   if (!user.userId) throw new Error("Unauthorised");
 
-  const fileKey = await db
+  const image = await db
     .delete(images)
     .where(and(eq(images.id, id), eq(images.userId, user.userId)))
-    .returning({ key: images.key });
+    .returning({ key: images.key, albumID: images.albumId });
 
-  if (!fileKey[0]) throw new Error("Image not found");
+  if (!image[0]) throw new Error("Image not found");
 
-  await utapi.deleteFiles(fileKey[0].key);
+  await utapi.deleteFiles(image[0].key);
 
-  redirect("/");
+  if (image[0].albumID == null) {
+    redirect("/");
+  } else {
+    redirect(`/${image[0].albumID}`);
+  }
 }
