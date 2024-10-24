@@ -58,6 +58,7 @@ export async function getImage(id: number) {
 
   return image;
 }
+
 export async function deleteImage(id: number) {
   const utapi = new UTApi();
   const user = auth();
@@ -73,8 +74,10 @@ export async function deleteImage(id: number) {
   await utapi.deleteFiles(image[0].key);
 
   if (image[0].albumID == null) {
+    console.log("redirecting to homepage");
     redirect("/");
   } else {
+    console.log(`redirecting to album-${image[0].albumID}`);
     redirect(`/${image[0].albumID}`);
   }
 }

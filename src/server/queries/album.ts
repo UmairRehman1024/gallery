@@ -16,26 +16,26 @@ export async function CheckAlbumExists(id: number) {
   }
 }
 
-export function CheckParams(params?: string[]) {
-  const user = auth();
-  if (!user.userId) return;
+// export function CheckParams(albumID: string) {
+//   const user = auth();
+//   if (!user.userId) return;
 
-  let albumURL: number[] | undefined;
-  if (params != undefined) {
-    albumURL = [];
-    params.forEach((param) => {
-      const paramNumber = Number(param);
+//   let albumURL: number[] | undefined;
+//   if (params != undefined) {
+//     albumURL = [];
+//     params.forEach((param) => {
+//       const paramNumber = Number(param);
 
-      if (isNaN(paramNumber)) {
-        notFound();
-      }
+//       if (isNaN(paramNumber)) {
+//         notFound();
+//       }
 
-      if (!CheckAlbumExists(paramNumber)) {
-        notFound();
-      }
+//       if (!CheckAlbumExists(paramNumber)) {
+//         notFound();
+//       }
 
-      albumURL?.push(paramNumber);
-    });
-  }
-  return albumURL;
-}
+//       albumURL?.push(paramNumber);
+//     });
+//   }
+//   return albumURL;
+// }

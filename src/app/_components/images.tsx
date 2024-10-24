@@ -3,7 +3,7 @@ import { getAlbumID } from "~/server/actions/album";
 import Image from "next/image";
 import { getMyAlbumImages } from "~/server/actions/image";
 
-export async function Images(props: { albumURL?: number[] }) {
+export async function Images(props: { albumID?: number }) {
   let images;
 
   // if (props.albumURL) {
@@ -15,8 +15,8 @@ export async function Images(props: { albumURL?: number[] }) {
   //   images = await getMyAlbumImages(null);
   // }
 
-  if (props.albumURL) {
-    images = await getMyAlbumImages(props.albumURL[props.albumURL.length - 1]);
+  if (props.albumID) {
+    images = await getMyAlbumImages(props.albumID);
   } else {
     images = await getMyAlbumImages(undefined);
   }
