@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Images } from "../_components/images";
 import { Albums } from "../_components/albums";
 import { PreviousAlbumButton } from "../_components/previous-album";
