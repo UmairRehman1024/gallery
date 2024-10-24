@@ -5,18 +5,13 @@ import { db } from "../db";
 import { auth } from "@clerk/nextjs/server";
 import { albums } from "../db/schema";
 import { notFound, redirect } from "next/navigation";
+import { getAlbumIDFromPath } from "~/utils/get-last-number";
 
 export async function addAlbum(name: string, path: string) {
   const user = auth();
   if (!user.userId) throw new Error("Unauthorised");
 
-  let parentId;
-
-  if (path == "/") {
-    parentId = null;
-  } else {
-    parentId = getLastNumber(path);
-  }
+  const parentId = getAlbumIDFromPath(path);
   console.log(path);
 
   const album = await db
@@ -34,15 +29,6 @@ export async function addAlbum(name: string, path: string) {
 
   //redirect to new album
   redirect(redirectPath);
-}
-
-function getLastNumber(input: string): number {
-  // Split the string by '/' and get the last element
-  const elements = input.split("/");
-  const lastElement = elements[elements.length - 1];
-
-  // Convert the last element to a number and return it
-  return Number(lastElement);
 }
 
 export async function getMyAlbums(parentId: number | undefined) {

@@ -1,9 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useUploadThing } from "~/utils/uploadthing";
 
 import { toast } from "sonner";
+import { getAlbumIDFromPath } from "~/utils/get-last-number";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -11,11 +12,14 @@ type Input = Parameters<typeof useUploadThing>;
 const useUploadThingInputProps = (...args: Input) => {
   const $ut = useUploadThing(...args);
 
+  const path = usePathname();
+  const albumID = getAlbumIDFromPath(path);
+
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const selectedFiles = Array.from(e.target.files);
-    const result = await $ut.startUpload(selectedFiles);
+    const result = await $ut.startUpload(selectedFiles, { albumID });
 
     console.log("uploaded files", result);
     // TODO: persist result in state maybe?
