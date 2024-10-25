@@ -8,7 +8,7 @@ import { notFound, redirect } from "next/navigation";
 import { getAlbumIDFromPath } from "~/utils/get-last-number";
 
 export async function addAlbum(name: string, path: string) {
-  const user = auth();
+  const user = await auth();
   if (!user.userId) throw new Error("Unauthorised");
 
   const parentId = getAlbumIDFromPath(path);
@@ -32,7 +32,7 @@ export async function addAlbum(name: string, path: string) {
 }
 
 export async function getMyAlbums(parentId: number | undefined) {
-  const user = auth();
+  const user = await auth();
 
   if (!user.userId) throw new Error("Unauthorised");
 
@@ -56,7 +56,7 @@ export async function getMyAlbums(parentId: number | undefined) {
 }
 
 export async function getAlbumID(albumName: string | undefined) {
-  const user = auth();
+  const user = await auth();
 
   if (!user.userId) throw new Error("Unauthorised");
 
@@ -72,6 +72,9 @@ export async function getAlbumID(albumName: string | undefined) {
 }
 
 export async function redirectToPreviousAlbumID(formData: FormData) {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorised");
+
   const currentID = formData.get("currentID");
   if (!currentID) throw new Error("CurrentID is null");
 
@@ -83,9 +86,6 @@ export async function redirectToPreviousAlbumID(formData: FormData) {
 
   if (isNaN(currentIDNumber))
     throw new Error("CurrentID is not a valid number");
-
-  const user = auth();
-  if (!user.userId) throw new Error("Unauthorised");
 
   const parentId = (
     await db.query.albums.findFirst({

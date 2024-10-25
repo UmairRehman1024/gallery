@@ -21,7 +21,7 @@ import { images } from "../db/schema";
 // }
 
 export async function getMyAlbumImages(AlbumID: number | undefined) {
-  const user = auth();
+  const user = await auth();
 
   if (!user.userId) throw new Error("Unauthorised");
 
@@ -45,7 +45,7 @@ export async function getMyAlbumImages(AlbumID: number | undefined) {
 }
 
 export async function getImage(id: number) {
-  const user = auth();
+  const user = await auth();
   if (!user.userId) throw new Error("Unauthorised");
 
   const image = await db.query.images.findFirst({
@@ -60,7 +60,7 @@ export async function getImage(id: number) {
 }
 export async function deleteImage(id: number) {
   const utapi = new UTApi();
-  const user = auth();
+  const user = await auth();
   if (!user.userId) throw new Error("Unauthorised");
 
   const image = await db
