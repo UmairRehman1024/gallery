@@ -14,6 +14,8 @@ export default async function HomePage({
 }) {
   //check if params are valid
 
+  console.log("---------------showing album page---------------");
+
   return (
     <main className="">
       <SignedOut>
