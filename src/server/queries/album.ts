@@ -17,8 +17,8 @@ export async function CheckAlbumExists(id: number) {
 }
 
 export function CheckParams(params?: string[]) {
-  const user = auth();
-  if (!user.userId) return;
+  // const user = await auth();
+  // if (!user.userId) return;
 
   let albumURL: number[] | undefined;
   if (params != undefined) {

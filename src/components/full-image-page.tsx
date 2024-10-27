@@ -9,7 +9,7 @@ export default async function FullPageImageView(props: {
 }) {
   const image = await getImage(props.id);
 
-  const uploaderInfo = await clerkClient().users.getUser(image.userId);
+  const uploaderInfo = await (await clerkClient()).users.getUser(image.userId);
   return (
     <div className="flex h-full w-full min-w-0 gap-2">
       <div className="relative size-full">
