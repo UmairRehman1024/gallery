@@ -59,6 +59,7 @@ export async function getImage(id: number) {
   return image;
 }
 export async function deleteImage(id: number) {
+  console.log("deleting image - " + id);
   const utapi = new UTApi();
   const user = await auth();
   if (!user.userId) throw new Error("Unauthorised");
@@ -73,8 +74,25 @@ export async function deleteImage(id: number) {
   await utapi.deleteFiles(image[0].key);
 
   if (image[0].albumID == null) {
+    console.log("rediecting to homepage");
     redirect("/");
   } else {
+    console.log("rediecting to " + image[0].albumID);
     redirect(`/${image[0].albumID}`);
   }
+}
+
+export async function checkImageExists(id: number): Promise<Boolean> {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorised");
+
+  const image = await db.query.images.findFirst({
+    where: (model, { eq }) => eq(model.id, id),
+  });
+
+  if (!image) return false;
+
+  if (image.userId !== user.userId) return false;
+
+  return true;
 }

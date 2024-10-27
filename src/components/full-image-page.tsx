@@ -1,13 +1,26 @@
 import { clerkClient } from "@clerk/nextjs/server";
-import { deleteImage, getImage } from "~/server/actions/image";
+import {
+  checkImageExists,
+  deleteImage,
+  getImage,
+} from "~/server/actions/image";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export default async function FullPageImageView(props: {
   id: number;
   children?: React.ReactNode;
 }) {
   const image = await getImage(props.id);
+
+  const imageExists = checkImageExists(props.id);
+
+  if (!imageExists) {
+    // Redirect or show a 404 if the image does not exist
+    console.log("IMAGE NOT FOUND");
+    return notFound();
+  }
 
   const uploaderInfo = await (await clerkClient()).users.getUser(image.userId);
   return (
