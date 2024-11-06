@@ -1,7 +1,7 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { Images } from "../_components/images";
-import { Albums } from "../_components/albums";
-import { PreviousAlbumButton } from "../_components/previous-album";
+import { Images } from "~/components/images";
+import { Albums } from "~/components/albums";
+import { PreviousAlbumButton } from "~/components/previous-album";
 import { notFound, redirect } from "next/navigation";
 import { CheckAlbumExists, CheckParams } from "~/server/queries/album";
 

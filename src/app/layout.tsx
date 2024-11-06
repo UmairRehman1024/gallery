@@ -4,7 +4,7 @@ import "@uploadthing/react/styles.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { TopNav } from "~/app/_components/topnav";
+import { TopNav } from "~/components/topnav";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
@@ -38,7 +38,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system">
             <div className="grid h-screen grid-rows-[auto,1fr]">
               <TopNav />
-              <main className="scrollbar scrollbar-track-transparent scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-800 overflow-y-scroll">
+              <main className="overflow-y-scroll scrollbar scrollbar-track-transparent scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-800">
                 {children}
               </main>
               {modal}

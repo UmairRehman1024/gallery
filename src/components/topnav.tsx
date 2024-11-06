@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { SimpleUploadButton } from "./simple-upload-button";
-import { ThemeToggle } from "~/app/_components/theme-toggle";
+import { ThemeToggle } from "~/components/theme-toggle";
 import { AlbumButton } from "./add-album-button";
 import Link from "next/link";
 
